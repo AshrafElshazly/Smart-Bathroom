@@ -7,30 +7,30 @@ LiquidCrystal_I2C lcd(0x24,16,2);
 Adafruit_SSD1306 oled(128, 64, &Wire, -1);
 
 void setup() {
- lcdDisplay("Welcome LCD");
- oledDisplay("Welcome OLED");
+ lcdDisplay(lcd, "LCD Obj");
+ oledDisplay(oled, "OLED obj");
 }
 
 void loop() {
 }
 
-void lcdDisplay(String text)
+void lcdDisplay(LiquidCrystal_I2C obj, String text)
 {
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(1,0);
-  lcd.print(text);
+  obj.init();
+  obj.backlight();
+  obj.setCursor(1,0);
+  obj.print(text);
 }
-void oledDisplay(String text)
+void oledDisplay(Adafruit_SSD1306 obj, String text)
 {
-  if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+  if (!obj.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("SSD1306 allocation failed"));
     while (true);
   }
-  oled.clearDisplay();
-  oled.setTextSize(1);
-  oled.setTextColor(WHITE);
-  oled.setCursor(0, 10);
-  oled.println(text); 
-  oled.display();
+  obj.clearDisplay();
+  obj.setTextSize(1);
+  obj.setTextColor(WHITE);
+  obj.setCursor(0, 10);
+  obj.println(text); 
+  obj.display();
 }
