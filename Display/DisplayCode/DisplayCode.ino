@@ -3,15 +3,12 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-LiquidCrystal_I2C lcd(0x24,20,4);
+LiquidCrystal_I2C lcd(0x24,16,2);
 Adafruit_SSD1306 oled(128, 64, &Wire, -1);
 
-String lcdText  = "Welcome LCD";
-String oledText = "Welcome OLED";
-
 void setup() {
- lcdDisplay(lcdText);
- oledDisplay(oledText);
+ lcdDisplay("Welcome LCD");
+ oledDisplay("Welcome OLED");
 }
 
 void loop() {
