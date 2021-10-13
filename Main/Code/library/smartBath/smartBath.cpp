@@ -35,3 +35,19 @@ int doUltraConfig (int trigPin ,int echopin)
   pinMode (trigPin,OUTPUT);
   pinMode (echopin ,INPUT);
 }
+
+void servoAngle(Servo obj, int pin, int angle, String mode)
+{
+  obj.attach(pin);
+
+  if(mode == "open"){
+    for(int i = 0; i <= angle;i++){
+      obj.write(i);
+    }
+  }else if(mode == "close"){
+    for(int j = angle; j == 0; j--){
+      obj.write(j);
+    }
+  }
+}
+
