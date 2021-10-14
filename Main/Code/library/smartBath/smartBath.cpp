@@ -22,18 +22,18 @@ void lcdDisplay(LiquidCrystal_I2C obj, String text)
   obj.print(text);
 }
 
+int doUltraConfig (int trigPin ,int echopin)
+{
+  pinMode (trigPin,OUTPUT);
+  pinMode (echopin ,INPUT);
+}
+
 bool ultraResult(int trigPin,int echoPin,int destance)
 {
  digitalWrite(trigPin,HIGH);
  delayMicroseconds(10);
  digitalWrite(trigPin,LOW);
  return (destance==(pulseIn(echoPin,HIGH)*0.017))? true : false;
-}
-
-int doUltraConfig (int trigPin ,int echopin)
-{
-  pinMode (trigPin,OUTPUT);
-  pinMode (echopin ,INPUT);
 }
 
 void servoAngle(Servo obj, int pin, int angle, String mode)
@@ -51,3 +51,18 @@ void servoAngle(Servo obj, int pin, int angle, String mode)
   }
 }
 
+void sendSMS(SoftwareSerial obj, String text)
+{
+  obj.begin(9600);
+  delay(100);
+  obj.print("AT+CMGF=1\r");
+  delay(100);
+  obj.print("AT+CMGS=\"+201015178920\"\r");
+  delay(500);
+  obj.print(text);
+  delay(500);
+  obj.print((char)26);
+  delay(500);
+  obj.println();
+  delay(500);
+}
