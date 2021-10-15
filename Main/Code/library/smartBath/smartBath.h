@@ -46,5 +46,6 @@ void doUltraConfig (int trigPin ,int echoPin);
 bool ultraResult(int trigPin,int echoPin,int destance);
 void servoControlle(Servo obj, int pin, String mode);
 void sendSMS(SoftwareSerial obj, String text);
+void pinConfig(String mode,int pins[]);
 
 #endif

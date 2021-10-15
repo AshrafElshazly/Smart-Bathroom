@@ -64,3 +64,18 @@ void sendSMS(SoftwareSerial obj, String text)
   obj.println();
   delay(500);
 }
+
+void pinConfig(String mode,int pins[])
+{
+  if(mode == "INPUT"){
+    for(int i = 0 ; i < sizeof(pins) / sizeof(int) ; i++){
+      pinMode(pins[i],INPUT);
+    }
+  }
+  if(mode == "OUTPUT")
+  {
+    for(int j = 0 ; j < sizeof(pins) / sizeof(int) ; j++){
+      pinMode(pins[j],OUTPUT);
+    }
+  }
+}
