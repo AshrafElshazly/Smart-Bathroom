@@ -22,10 +22,10 @@ void lcdDisplay(LiquidCrystal_I2C obj, String text)
   obj.print(text);
 }
 
-int doUltraConfig (int trigPin ,int echopin)
+void doUltraConfig (int trigPin ,int echoPin)
 {
-  pinMode (trigPin,OUTPUT);
-  pinMode (echopin ,INPUT);
+  pinMode (trigPin , OUTPUT);
+  pinMode (echoPin , INPUT);
 }
 
 bool ultraResult(int trigPin,int echoPin,int destance)
@@ -36,16 +36,14 @@ bool ultraResult(int trigPin,int echoPin,int destance)
  return (destance==(pulseIn(echoPin,HIGH)*0.017))? true : false;
 }
 
-void servoAngle(Servo obj, int pin, int angle, String mode)
+void servoControlle(Servo obj, int pin, String mode)
 {
   obj.attach(pin);
 
   if(mode == "open"){
-    for(int i = 0; i <= angle;i++){
-      obj.write(i);
-    }
+      obj.write(180);
   }else if(mode == "close"){
-    for(int j = angle; j == 0; j--){
+    for(int j = 180; j > 1; j--){
       obj.write(j);
     }
   }
