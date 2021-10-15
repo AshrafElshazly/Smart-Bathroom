@@ -5,14 +5,18 @@ Adafruit_SSD1306 oled(128, 64, &Wire, -1);
 Servo door;
 SoftwareSerial sim(TX0,RX0);
 
-boolean flag  = true;
+boolean flag      = true;
 boolean lcdFlag   = false;
 boolean oldFlag   = false;
 boolean flameFlag = false;
 
 void setup() {
+  Serial.begin(9600);
   pinConfig("OUTPUT",outputPins);
   pinConfig("INPUT",inputPins);
+  doUltraConfig(TRIG3,ECHO3);
+  doUltraConfig(TRIG2,ECHO2);
+  doUltraConfig(TRIG1,ECHO1);
 }
 
 void loop() {
@@ -22,12 +26,26 @@ void loop() {
     //Turn on extinguishing fire pump
     digitalWrite(EXTINGUISHING_FIRES,LOW);
     //Turn on buzzer
-    digitalWrite(BUZZER,HIGH);
+    tone(BUZZER, 1000, 200);
     //Send an emergency message 
     sendSMS(sim,"There is a fire ");
     lcdDisplay(lcd,"Fire inside");
     }
    //End Check Flam Sensor
+
+  //Start Check MQ Sensor
+  if (digitalRead(FLAME) == 0){
+    //Open Door
+    servoControlle(door,DOOR,"open");
+    //Open Air hood
+    digitalWrite(AIR_HOOD,HIGH);
+    //Turn on buzzer
+    tone(BUZZER, 1000, 200);
+    //Send an emergency message 
+    sendSMS(sim,"There is a Somke ");
+    lcdDisplay(lcd,"Somke inside");
+    }
+   //End Check MQ Sensor
    
   //Check PIR Sensor
   if(digitalRead(PIR) == 0){
@@ -53,8 +71,8 @@ void loop() {
           delay(5000);
           servoControlle(door,DOOR,"close");
           }
-      }else if (flag == false){
-        lcdDisplay(lcd,"Enter Valid Coin");
+      }else if (digitalRead(COIN_MACHINE) == 1 && flag == false){
+        lcdDisplay(lcd,"Enter Coin");
         }
     }else{
     lcdDisplay(lcd,"Busy");

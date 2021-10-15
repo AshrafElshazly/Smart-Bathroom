@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include <TimeLib.h>
 #include <LiquidCrystal_I2C.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -13,7 +14,7 @@
 #define INTERIOR_LIGHT 26
 #define EXTERNAL_LIGHT 27
 #define PUMPER_ANTISEPTIC 34
-#define SECTION 35
+#define AIR_HOOD 35
 #define PERFUMED 36
 #define FLOOR 43
 #define TRIG3 24
@@ -37,11 +38,13 @@
 #define TRIG2 28
 #define ECHO2 29
 
-const int inputPins[]  = {COIN_MACHINE,PIR,FLAME}; 
-const int outputPins[] = {INTERIOR_LIGHT,EXTERNAL_LIGHT,PUMPER_ANTISEPTIC,SECTION,PERFUMED,FLOOR,DOOR,BUZZER,EXTINGUISHING_FIRES,TAP,LIQUID,SERVO_MOTOR_TOILET};
+const int inputPins[]  = {COIN_MACHINE,PIR,FLAME,GAS}; 
+const int outputPins[] = {INTERIOR_LIGHT,EXTERNAL_LIGHT,PUMPER_ANTISEPTIC,AIR_HOOD,PERFUMED,FLOOR,DOOR,BUZZER,EXTINGUISHING_FIRES,TAP,LIQUID,SERVO_MOTOR_TOILET};
 
 void oledDisplay(Adafruit_SSD1306 obj, String text);
 void lcdDisplay(LiquidCrystal_I2C obj, String text);
+void oledTimer(Adafruit_SSD1306 obj);
+void lcdTimer(LiquidCrystal_I2C obj);
 void doUltraConfig (int trigPin ,int echoPin);
 bool ultraResult(int trigPin,int echoPin,int destance);
 void servoControlle(Servo obj, int pin, String mode);

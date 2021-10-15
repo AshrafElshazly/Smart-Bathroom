@@ -10,7 +10,7 @@ void oledDisplay(Adafruit_SSD1306 obj, String text)
   obj.setTextSize(1);
   obj.setTextColor(WHITE);
   obj.setCursor(0, 10);
-  obj.println(text); 
+  obj.print(text); 
   obj.display();
 }
 
@@ -20,6 +20,44 @@ void lcdDisplay(LiquidCrystal_I2C obj, String text)
   obj.backlight();
   obj.setCursor(1,0);
   obj.print(text);
+}
+
+void lcdTimer(LiquidCrystal_I2C obj){
+  obj.init();
+  obj.backlight();
+  obj.setCursor(1,0);
+  obj.print(hour());
+  obj.print(":");
+  if(minute() < 10)
+  obj.print('0');
+  obj.print(minute());
+  obj.print(":");
+  if(second() < 10)
+  obj.print('0');
+  obj.print(second());
+  obj.println();
+}
+
+void oledTimer(Adafruit_SSD1306 obj){
+  if (!obj.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    while (true);
+  }
+  obj.clearDisplay();
+  obj.setTextSize(1);
+  obj.setTextColor(WHITE);
+  obj.setCursor(0, 10);
+  obj.print(hour());
+  obj.print(":");
+  if(minute() < 10)
+  obj.print('0');
+  obj.print(minute());
+  obj.print(":");
+  if(second() < 10)
+  obj.print('0');
+  obj.print(second());
+  obj.println();
+  obj.display();
 }
 
 void doUltraConfig (int trigPin ,int echoPin)
